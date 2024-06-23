@@ -37,7 +37,7 @@ connection.connect(err => {
                     apellido VARCHAR(100) NOT NULL,
                     email VARCHAR(100) NOT NULL UNIQUE,
                     telefono VARCHAR(20),
-                    estado VARCHAR(50) NOT NULL,
+                    estado TINYINT(1) NOT NULL,
                     password VARCHAR(255) NOT NULL
                 )
             `, err => {
@@ -55,7 +55,7 @@ connection.connect(err => {
                         apellido VARCHAR(100) NOT NULL,
                         email VARCHAR(100) NOT NULL UNIQUE,
                         fecha_nacimiento DATE NOT NULL,
-                        estado VARCHAR(50) NOT NULL,
+                        estado TINYINT(1) NOT NULL,
                         password VARCHAR(255) NOT NULL
                     )
                 `, err => {

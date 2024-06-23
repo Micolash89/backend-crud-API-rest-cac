@@ -1,7 +1,7 @@
 import express from "express";
 import config from "./config/config.js";
 import cors from "cors";
-// import db from "./db/db.js"
+import profesoresRouter from "./routers/profesoresRouter.js";
 
 const port = config.port || 8080;
 
@@ -11,12 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
 
-/*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
-// db.query("SELECT * FROM alumnos", (err, result) => {
-//     if (err) throw err;
-//     console.log(result);
-//     console.log(typeof result)
-// })
+
+app.use("/api/profesores", profesoresRouter);
 
 const server = app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`);

@@ -6,7 +6,10 @@ export const obtenerListaProfesores = (req, res) => {
     /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
 
     db.query("SELECT * FROM profesores WHERE estado = 1", (err, result) => {
-        if (err) throw err;
+        if (err) return res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
+        });
 
         res.send({
             message: "lista de profesores",
@@ -15,7 +18,7 @@ export const obtenerListaProfesores = (req, res) => {
 
     });
 
-}
+};
 
 export const subirProfesor = (req, res) => {
 
@@ -32,7 +35,10 @@ export const subirProfesor = (req, res) => {
     const sql = "INSERT INTO profesores (nombre, apellido , email, telefono, estado, password) VALUES (?,?,?,?,?,?)";
 
     db.query(sql, [nombre, apellido, email, telefono, true, createHash(password)], (err, result) => {
-        if (err) throw err;
+        if (err) return res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
+        });
 
         return res.send({
             message: "carga exitoso de profesor",
@@ -41,7 +47,7 @@ export const subirProfesor = (req, res) => {
 
     });
 
-}
+};
 
 export const actualizarProfesor = (req, res) => {
 
@@ -72,7 +78,7 @@ export const actualizarProfesor = (req, res) => {
 
     });
 
-}
+};
 
 export const eliminarProfesor = (req, res) => {
 
@@ -102,5 +108,5 @@ export const eliminarProfesor = (req, res) => {
 
     });
 
-}
+};
 

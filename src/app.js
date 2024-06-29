@@ -3,6 +3,8 @@ import config from "./config/config.js";
 import cors from "cors";
 import profesoresRouter from "./routers/profesoresRouter.js";
 import searchRouter from "./routers/searchRouter.js";
+import cursosRouter from "./routers/cursoRouter.js";
+import inscripcionRouter from "./routers/inscripcionRouter.js";
 //import alumnosRouter from "./routers/alumnosRouter.js";
 
 const port = config.port || 8080;
@@ -17,6 +19,8 @@ app.use(cors({ origin: "http://localhost:5173", methods: ["GET", "POST", "PUT", 
 app.use("/api/profesores", profesoresRouter);
 //app.use("/api/alumnos", alumnosRouter);
 app.use("/api/search", searchRouter)
+app.use("/api/cursos", cursosRouter);
+app.use("/api/inscripciones", inscripcionRouter);
 
 const server = app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`);

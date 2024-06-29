@@ -3,7 +3,6 @@ import { actualizarProfesor, eliminarProfesor, obtenerListaProfesores, obtenerPr
 
 const profesoresRouter = Router();
 
-
 profesoresRouter.get("/obtener", obtenerListaProfesores);
 
 profesoresRouter.get("/obtener/:id", obtenerProfesor);

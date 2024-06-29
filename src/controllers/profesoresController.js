@@ -28,8 +28,8 @@ export const obtenerProfesor = (req, res) => {
 
     const { id } = req.params;
 
+    /*hacer un join con sursos en profesores con curso*/
     const sql = "SELECT * FROM profesores WHERE id_profesor = ? AND estado = 1";
-
 
     db.query(sql, [id], (err, result) => {
         if (err) return res.status(500).send({

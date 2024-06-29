@@ -5,7 +5,9 @@ export const obtenerListaProfesores = (req, res) => {
 
     /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
 
-    db.query("SELECT * FROM profesores WHERE estado = 1", (err, result) => {
+    const sql = "SELECT * FROM profesores WHERE estado = 1";
+
+    db.query(sql, (err, result) => {
         if (err) return res.status(500).send({
             message: "error en la base de datos",
             payload: []
@@ -13,6 +15,30 @@ export const obtenerListaProfesores = (req, res) => {
 
         res.send({
             message: "lista de profesores",
+            payload: result
+        });
+
+    });
+
+};
+
+export const obtenerProfesor = (req, res) => {
+
+    /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
+
+    const { id } = req.params;
+
+    const sql = "SELECT * FROM profesores WHERE id_profesor = ? AND estado = 1";
+
+
+    db.query(sql, [id], (err, result) => {
+        if (err) return res.status(500).send({
+            message: `no se encontro el profesor con id ${id}`,
+            payload: []
+        });
+
+        res.send({
+            message: "Profesor encontrado profesores",
             payload: result
         });
 
@@ -64,12 +90,12 @@ export const actualizarProfesor = (req, res) => {
     const sql = "UPDATE profesores SET nombre =? , apellido = ?, email = ?, telefono = ? WHERE id_profesor = ?";
 
     db.query(sql, [nombre, apellido, email, telefono, id_profesor], (err, result) => {
-        if (err) return res.status(500).send({
-            message: "error en la base de datos",
-            payload: []
-        });
-
-        console.log(result);
+        if (err) {
+            return res.status(500).send({
+                message: "error en la base de datos",
+                payload: []
+            });
+        }
 
         return res.send({
             message: "actualizacion de profesor exitoso ",
@@ -82,9 +108,9 @@ export const actualizarProfesor = (req, res) => {
 
 export const eliminarProfesor = (req, res) => {
 
-    const { id_profesor } = req.body;
+    const { pid } = req.params;
 
-    if (!id_profesor) {
+    if (!pid) {
 
         return res.status(400).send({
             message: "error en algun campo",
@@ -95,7 +121,7 @@ export const eliminarProfesor = (req, res) => {
     //baja logica
     const sql = "UPDATE profesores SET estado = ? WHERE id_profesor = ?";
 
-    db.query(sql, [false, id_profesor], (err, result) => {
+    db.query(sql, [false, pid], (err, result) => {
         if (err) return res.status(500).send({
             message: "error en la base de datos",
             payload: []

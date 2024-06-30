@@ -9,8 +9,9 @@ cursosRouter.get("/obtener/:cid", (req, res) => {
 
     const sql = `
     SELECT * 
-    FROM cursos 
+    FROM cursos c
     WHERE id = ?
+    JOIN profesores p ON c.id_profesores = p.id_profesores AND p.estado=1
     `
     db.query(sql, [cid], (err, rows) => {
 
@@ -31,8 +32,17 @@ cursosRouter.get("/obtener/:cid", (req, res) => {
 cursosRouter.get("/obtener", (req, res) => {
 
     const sql = `
-        SELECT *
-        FROM cursos
+       SELECT   c.id_curso,
+                c.nombre AS nombre_curso,
+                c.descripcion,
+                p.id_profesor,
+                p.nombre AS nombre_profesor,
+                p.apellido,
+                p.email,
+                p.telefono,
+                p.estado
+    FROM cursos c
+    INNER JOIN profesores p ON c.id_profesor = p.id_profesor AND p.estado = 1
     `
     db.query(sql, (err, result) => {
 

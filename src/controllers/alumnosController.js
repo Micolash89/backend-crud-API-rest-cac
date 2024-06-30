@@ -6,7 +6,7 @@ export const obtenerListaAlumnos = (req, res) => {
     db.query("SELECT * FROM alumnos WHERE estado=1", (err, result) => {
         if (err) throw err;
         res.send({
-            message: "lisr de alumnos",
+            message: "lista de alumnos",
             payload: result
         });
 

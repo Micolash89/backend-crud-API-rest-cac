@@ -16,7 +16,7 @@ connection.connect(err => {
     console.log("Connected to the database.");
 
     // Crear la base de datos si no existe
-    connection.query('CREATE DATABASE IF NOT EXISTS ' + "escuela", err => {
+    connection.query(` CREATE DATABASE IF NOT EXISTS ${process.env.MYSQL_ADDON_DB}`, err => {
         if (err) {
             console.error("Error creating database: ", err);
             return;
@@ -24,12 +24,12 @@ connection.connect(err => {
         console.log("Database created or already exists.");
 
         // Usar la base de datos
-        connection.query('USE' + "escuela", err => {
+        connection.query(`USE ${process.env.MYSQL_ADDON_DB}`, err => {
             if (err) {
                 console.error("Error using database: ", err);
                 return;
             }
-            console.log("Using database 'escuela'.");
+            console.log(`Using database '${process.env.MYSQL_ADDON_DB}'.`);
 
             // Crear tabla Profesores
             connection.query(`

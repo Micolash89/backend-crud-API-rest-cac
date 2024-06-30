@@ -2,7 +2,6 @@ import { createConnection } from "mysql2";
 
 const connection = createConnection({
     host: process.env.MYSQL_ADDON_HOST,
-    port: process.env.MYSQL_ADDON_PORT,
     user: process.env.MYSQL_ADDON_USER,
     password: process.env.MYSQL_ADDON_PASSWORD,
     database: process.env.MYSQL_ADDON_DB,
@@ -16,7 +15,7 @@ connection.connect(err => {
     console.log("Connected to the database.");
 
     // Crear la base de datos si no existe
-    connection.query('CREATE DATABASE IF NOT EXISTS escuela', err => {
+    connection.query('CREATE DATABASE IF NOT EXISTS ' + process.env.MYSQL_ADDON_DB, err => {
         if (err) {
             console.error("Error creating database: ", err);
             return;
@@ -24,7 +23,7 @@ connection.connect(err => {
         console.log("Database created or already exists.");
 
         // Usar la base de datos
-        connection.query('USE escuela', err => {
+        connection.query('USE' + process.env.MYSQL_ADDON_DB, err => {
             if (err) {
                 console.error("Error using database: ", err);
                 return;

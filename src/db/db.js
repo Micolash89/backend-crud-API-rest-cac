@@ -33,7 +33,7 @@ connection.connect(err => {
 
             // Crear tabla Profesores
             connection.query(`
-                CREATE TABLE IF NOT EXISTS Profesores (
+                CREATE TABLE IF NOT EXISTS profesores (
                     id_profesor INT AUTO_INCREMENT PRIMARY KEY,
                     nombre VARCHAR(100) NOT NULL,
                     apellido VARCHAR(100) NOT NULL,
@@ -44,14 +44,14 @@ connection.connect(err => {
                 )
             `, err => {
                 if (err) {
-                    console.error("Error creating Profesores table: ", err);
+                    console.error("Error creating profesores table: ", err);
                     return;
                 }
-                console.log("Table 'Profesores' created or already exists.");
+                console.log("Table 'profesores' created or already exists.");
 
                 // Crear tabla Alumnos
                 connection.query(`
-                    CREATE TABLE IF NOT EXISTS Alumnos (
+                    CREATE TABLE IF NOT EXISTS alumnos (
                         id_alumno INT AUTO_INCREMENT PRIMARY KEY,
                         nombre VARCHAR(100) NOT NULL,
                         apellido VARCHAR(100) NOT NULL,
@@ -62,43 +62,43 @@ connection.connect(err => {
                     )
                 `, err => {
                     if (err) {
-                        console.error("Error creating Alumnos table: ", err);
+                        console.error("Error creating alumnos table: ", err);
                         return;
                     }
-                    console.log("Table 'Alumnos' created or already exists.");
+                    console.log("Table 'alumnos' created or already exists.");
 
                     // Crear tabla Cursos
                     connection.query(`
-                        CREATE TABLE IF NOT EXISTS Cursos (
+                        CREATE TABLE IF NOT EXISTS cursos (
                             id_curso INT AUTO_INCREMENT PRIMARY KEY,
                             nombre VARCHAR(100) NOT NULL,
                             descripcion TEXT,
                             id_profesor INT,
-                            FOREIGN KEY (id_profesor) REFERENCES Profesores(id_profesor)
+                            FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
                         )
                     `, err => {
                         if (err) {
-                            console.error("Error creating Cursos table: ", err);
+                            console.error("Error creating cursos table: ", err);
                             return;
                         }
-                        console.log("Table 'Cursos' created or already exists.");
+                        console.log("Table 'cursos' created or already exists.");
 
                         // Crear tabla Inscripciones
                         connection.query(`
-                            CREATE TABLE IF NOT EXISTS Inscripciones (
+                            CREATE TABLE IF NOT EXISTS inscripciones (
                                 id_inscripcion INT AUTO_INCREMENT PRIMARY KEY,
                                 id_alumno INT,
                                 id_curso INT,
                                 fecha_inscripcion DATE NOT NULL,
-                                FOREIGN KEY (id_alumno) REFERENCES Alumnos(id_alumno),
-                                FOREIGN KEY (id_curso) REFERENCES Cursos(id_curso)
+                                FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno),
+                                FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
                             )
                         `, err => {
                             if (err) {
-                                console.error("Error creating Inscripciones table: ", err);
+                                console.error("Error creating inscripciones table: ", err);
                                 return;
                             }
-                            console.log("Table 'Inscripciones' created or already exists.");
+                            console.log("Table 'inscripciones' created or already exists.");
                         });
                     });
                 });

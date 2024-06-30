@@ -1,5 +1,5 @@
 import express from "express";
-import config from "./config/config.js";
+//import config from "./config/config.js";
 import cors from "cors";
 import profesoresRouter from "./routers/profesoresRouter.js";
 import searchRouter from "./routers/searchRouter.js";

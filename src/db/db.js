@@ -1,11 +1,11 @@
 import { createConnection } from "mysql2";
 
 const connection = createConnection({
-    host: process.env.MYSQL_ADDON_HOST,
-    user: process.env.MYSQL_ADDON_USER,
-    password: process.env.MYSQL_ADDON_PASSWORD,
-    database: process.env.MYSQL_ADDON_DB,
-    port: process.env.MYSQL_ADDON_PORT
+    host: process.env.MYSQL_ADDON_HOST || "localhost",
+    user: process.env.MYSQL_ADDON_USER || "root",
+    password: process.env.MYSQL_ADDON_PASSWORD || "root",
+    database: process.env.MYSQL_ADDON_DB || "escuela",
+    port: process.env.MYSQL_ADDON_PORT || 3306
 });
 
 connection.connect(err => {
@@ -16,7 +16,7 @@ connection.connect(err => {
     console.log("Connected to the database.");
 
     // Crear la base de datos si no existe
-    connection.query(` CREATE DATABASE IF NOT EXISTS ${process.env.MYSQL_ADDON_DB}`, err => {
+    connection.query(` CREATE DATABASE IF NOT EXISTS ${process.env.MYSQL_ADDON_DB || "escuela"}`, err => {
         if (err) {
             console.error("Error creating database: ", err);
             return;
@@ -24,12 +24,12 @@ connection.connect(err => {
         console.log("Database created or already exists.");
 
         // Usar la base de datos
-        connection.query(`USE ${process.env.MYSQL_ADDON_DB}`, err => {
+        connection.query(`USE ${process.env.MYSQL_ADDON_DB || "escuela"}`, err => {
             if (err) {
                 console.error("Error using database: ", err);
                 return;
             }
-            console.log(`Using database '${process.env.MYSQL_ADDON_DB}'.`);
+            console.log(`Using database '${process.env.MYSQL_ADDON_DB || "escuela"}'.`);
 
             // Crear tabla Profesores
             connection.query(`

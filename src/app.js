@@ -7,6 +7,7 @@ import cursosRouter from "./routers/cursoRouter.js";
 import inscripcionRouter from "./routers/inscripcionRouter.js";
 import alumnosRouter from "./routers/alumnosRouter.js";
 import dotenv from "dotenv"
+import sessionRouter from "./routers/session.Router.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use("/api/search", searchRouter)
 app.use("/api/cursos", cursosRouter);
 app.use("/api/inscripciones", inscripcionRouter);
 app.use("/api/alumnos", alumnosRouter);
+app.use("/api/session", sessionRouter);
 
 const server = app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`);

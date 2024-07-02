@@ -1,5 +1,4 @@
 import db from "../db/db.js"
-import { createHash } from "../../utils.js";
 
 export const obtenerListaAlumnos = (req, res) => {
     /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
@@ -14,29 +13,42 @@ export const obtenerListaAlumnos = (req, res) => {
 
 }
 
-export const subirAlumno = (req, res) => {
+export const subirAlumno = async (req, res) => {
 
-    const { nombre, apellido, email, fecha_nacimiento, password } = req.body;
+    const { nombre, apellido, email, fecha_nacimiento, id_curso } = req.body;
 
-    console.log(req.body);
-
-    if (!nombre || !apellido || !email || !fecha_nacimiento || !password) {
+    if (!nombre || !apellido || !email || !fecha_nacimiento || id_curso < 0) {
         return res.status(400).send({
             message: "falta un campo al cargar",
             payload: []
         })
     }
 
-    const sql = "INSERT INTO alumnos (nombre,apellido,email,fecha_nacimiento,estado,password) VALUES (?,?,?,?,?,?)";
+    const sql1 = "INSERT INTO alumnos (nombre,apellido,email,fecha_nacimiento,estado) VALUES (?,?,?,?,?)";
 
-    db.query(sql, [nombre, apellido, email, fecha_nacimiento, true, createHash(password)], (err, result) => {
-        if (err) throw err;
+    const sql2 = "INSERT INTO inscripciones (id_alumno, id_curso, fecha_inscripcion) VALUE (?,?,?)"
+
+    try {
+
+        const [alumnoResult] = await db.promise().query(sql1, [nombre, apellido, email, fecha_nacimiento, true]);
+
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+
+        const [cursoResul] = await db.promise().query(sql2, [alumnoResult.insertId, id_curso, formattedDate]);
+
         res.send({
             message: "carga exitosa de alumno",
-            payload: result.insertId
-        });
+            payload: alumnoResult.insertId
+        })
 
-    })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            message: "error al cargar el alumno",
+            payload: []
+        })
+    }
 
 }
 

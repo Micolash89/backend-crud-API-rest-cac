@@ -34,13 +34,14 @@ connection.connect(err => {
             // Crear tabla Profesores
             connection.query(`
                 CREATE TABLE IF NOT EXISTS profesores (
-                    id_profesor INT AUTO_INCREMENT PRIMARY KEY,
-                    nombre VARCHAR(100) NOT NULL,
-                    apellido VARCHAR(100) NOT NULL,
-                    email VARCHAR(100) NOT NULL UNIQUE,
-                    telefono VARCHAR(20),
-                    estado TINYINT(1) NOT NULL,
-                    password VARCHAR(255) NOT NULL
+                id_profesor INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(100) NOT NULL,
+                apellido VARCHAR(100) NOT NULL,
+                email VARCHAR(100) NOT NULL UNIQUE,
+                telefono VARCHAR(20),
+                estado TINYINT(1) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                role ENUM('PROFESOR', 'ADMIN') NOT NULL DEFAULT 'PROFESOR'
                 )
             `, err => {
                 if (err) {
@@ -57,8 +58,7 @@ connection.connect(err => {
                         apellido VARCHAR(100) NOT NULL,
                         email VARCHAR(100) NOT NULL UNIQUE,
                         fecha_nacimiento DATE NOT NULL,
-                        estado TINYINT(1) NOT NULL,
-                        password VARCHAR(255) NOT NULL
+                        estado TINYINT(1) NOT NULL
                     )
                 `, err => {
                     if (err) {
@@ -72,7 +72,6 @@ connection.connect(err => {
                         CREATE TABLE IF NOT EXISTS cursos (
                             id_curso INT AUTO_INCREMENT PRIMARY KEY,
                             nombre VARCHAR(100) NOT NULL,
-                            descripcion TEXT,
                             id_profesor INT,
                             FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
                         )

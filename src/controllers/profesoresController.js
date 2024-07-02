@@ -46,11 +46,11 @@ export const obtenerProfesor = (req, res) => {
 
 };
 
-export const subirProfesor = (req, res) => {
+export const subirProfesor = async (req, res) => {
 
-    const { nombre, apellido, email, telefono, password } = req.body;
+    const { nombre, apellido, email, telefono, password, role, curso } = req.body;
 
-    if (!nombre || !apellido || !email || !telefono || !password) {
+    if (!nombre || !apellido || !email || !telefono || !password || !role || !curso) {
 
         return res.status(400).send({
             message: "error en algun campo",
@@ -58,28 +58,37 @@ export const subirProfesor = (req, res) => {
         })
     }
 
-    const sql = "INSERT INTO profesores (nombre, apellido , email, telefono, estado, password) VALUES (?,?,?,?,?,?)";
+    console.log(nombre, apellido, email, telefono, password, role, curso);
 
-    db.query(sql, [nombre, apellido, email, telefono, true, createHash(password)], (err, result) => {
-        if (err) return res.status(500).send({
+    const sql1 = "INSERT INTO profesores (nombre, apellido , email, telefono, estado, password, role) VALUES (?,?,?,?,?,?,?)";
+
+    const sql2 = `INSERT INTO cursos (nombre, id_profesor) VALUES (?,?)`;
+
+    try {
+
+        const [profesoresResult] = await db.promise().query(sql1, [nombre, apellido, email, telefono, true, createHash(password), role]);
+
+        const [cursosResult] = await db.promise().query(sql2, [curso, profesoresResult.insertId]);
+
+        res.send({
+            message: "carga exitoso de profesor",
+            payload: profesoresResult.insertId
+        });
+
+    } catch (error) {
+        res.status(500).send({
             message: "error en la base de datos",
             payload: []
         });
-
-        return res.send({
-            message: "carga exitoso de profesor",
-            payload: result.insertId
-        });
-
-    });
+    }
 
 };
 
 export const actualizarProfesor = (req, res) => {
 
-    const { id_profesor, nombre, apellido, email, telefono } = req.body;
+    const { id_profesor, nombre, apellido, email, telefono, role } = req.body;
 
-    if (!id_profesor || !nombre || !apellido || !email || !telefono) {
+    if (!id_profesor || !nombre || !apellido || !email || !telefono, !role) {
 
         return res.status(400).send({
             message: "error en algun campo",
@@ -87,9 +96,9 @@ export const actualizarProfesor = (req, res) => {
         })
     }
 
-    const sql = "UPDATE profesores SET nombre =? , apellido = ?, email = ?, telefono = ? WHERE id_profesor = ?";
+    const sql = "UPDATE profesores SET nombre =? , apellido = ?, email = ?, telefono = ?, role = ? WHERE id_profesor = ?";
 
-    db.query(sql, [nombre, apellido, email, telefono, id_profesor], (err, result) => {
+    db.query(sql, [nombre, apellido, email, telefono, role, id_profesor], (err, result) => {
         if (err) {
             return res.status(500).send({
                 message: "error en la base de datos",

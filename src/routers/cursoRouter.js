@@ -8,7 +8,7 @@ cursosRouter.get("/obtener/:cid", (req, res) => {
     const { cid } = req.params;
 
     const sql = `
-    SELECT * 
+    SELECT *
     FROM cursos c
     WHERE id = ?
     JOIN profesores p ON c.id_profesores = p.id_profesores AND p.estado=1
@@ -34,7 +34,6 @@ cursosRouter.get("/obtener", (req, res) => {
     const sql = `
        SELECT   c.id_curso,
                 c.nombre AS nombre_curso,
-                c.descripcion,
                 p.id_profesor,
                 p.nombre AS nombre_profesor,
                 p.apellido,
@@ -60,12 +59,12 @@ cursosRouter.get("/obtener", (req, res) => {
 });
 
 cursosRouter.post("/subir", (req, res) => {
-    const { nombre, descripcion, id_profesor } = req.body;
+    const { nombre, id_profesor } = req.body;
     const sql = `
-        INSERT INTO cursos(nombre, descripcion, id_profesor)
+        INSERT INTO cursos(nombre,  id_profesor)
         VALUES(?,?,?)
     `
-    db.query(sql, [nombre, descripcion, id_profesor], (err, result) => {
+    db.query(sql, [nombre, id_profesor], (err, result) => {
 
         if (err) return res.status(500).send({
             message: "error en la base de datos",
@@ -82,13 +81,13 @@ cursosRouter.post("/subir", (req, res) => {
 });
 
 cursosRouter.put("/actualizar", (req, res) => {
-    const { id, nombre, descripcion, id_profesor } = req.body;
+    const { id, nombre, id_profesor } = req.body;
     const sql = `
         UPDATE cursos
-        SET nombre = ?, descripcion = ?, id_profesor = ?
+        SET nombre = ?, id_profesor = ?
         WHERE id = ?
     `
-    db.query(sql, [nombre, descripcion, id_profesor, id], (err, result) => {
+    db.query(sql, [nombre, id_profesor, id], (err, result) => {
 
         if (err) return res.status(500).send({
             message: "error en la base de datos",

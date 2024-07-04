@@ -5,7 +5,8 @@ export const obtenerListaAlumnos = async (req, res) => {
 
     const sql = `
                 SELECT a.*,
-                c.nombre AS nombre_curso
+                c.nombre AS nombre_curso,
+                c.id_curso
                 FROM alumnos a
                 INNER JOIN inscripciones i ON a.id_alumno = i.id_alumno
                 INNER JOIN cursos c ON i.id_curso = c.id_curso
@@ -72,40 +73,55 @@ export const subirAlumno = async (req, res) => {
 
 }
 
-export const actualizarAlumno = (req, res) => {
+export const actualizarAlumno = async (req, res) => {
 
-    const { id_alumno, nombre, apellido, email, fecha_nacimiento } = req.body;
+    const { id_alumno, nombre, apellido, email, fecha_nacimiento, id_curso } = req.body;
 
-    if (!id_alumno || !nombre || !apellido || !email || !fecha_nacimiento) {
+    if (!id_alumno || !nombre || !apellido || !email || !fecha_nacimiento || !id_curso) {
         return res.status(400).send({
             message: "falta un campo al cargar",
             payload: []
         })
     }
 
-    const sql = `UPDATE 
-                alumnos 
-                SET nombre=? ,
-                apellido=? ,
-                email=? ,
-                fecha_nacimiento=? 
-                WHERE id_alumno=?`;
+    const sql1 = `
+        UPDATE
+        alumnos
+        SET nombre=?,
+            apellido=?,
+            email=?,
+            fecha_nacimiento=?
+            WHERE id_alumno=?;
+    `
 
-    db.query(sql, [nombre, apellido, email, fecha_nacimiento, id_alumno], (err, result) => {
+    const sql2 = `
+        UPDATE
+        inscripciones
+        SET id_curso = ?,
+        fecha_inscripcion = ?
+        WHERE id_alumno = ?;
+    `
+    try {
 
-        if (err) {
-            return res.status(500).send({
-                message: "error en la base de datos",
-                payload: []
-            });
-        }
+        const [alumnoResult] = await db.promise().query(sql1, [nombre, apellido, email, fecha_nacimiento, id_alumno]);
 
-        return res.send({
-            message: "Actualización de alumno exitosa",
-            payload: result.info
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+
+        const [inscripcionResul] = await db.promise().query(sql2, [id_curso, formattedDate, id_alumno]);
+
+        res.send({
+            message: "alumno actualizado",
+            payload: []
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
         });
-
-    });
+    }
 
 }
 

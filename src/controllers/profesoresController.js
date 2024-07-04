@@ -79,7 +79,7 @@ export const subirProfesor = async (req, res) => {
     if (role == "ADMIN")
         url = "https://i.imgur.com/pGsndwH.png";
     else
-        url = "https://i.imgur.com/u2ji9Bz.png";
+        url = "https://i.imgur.com/t7cmQFl.png";
 
     const sql1 = "INSERT INTO profesores (nombre, apellido , email, telefono, estado, password, role, url) VALUES (?,?,?,?,?,?,?,?)";
 
@@ -121,28 +121,12 @@ export const actualizarProfesor = async (req, res) => {
     if (role == "ADMIN")
         url = "https://i.imgur.com/pGsndwH.png";
     else
-        url = "https://i.imgur.com/u2ji9Bz.png";
+        url = "https://i.imgur.com/t7cmQFl.png";
 
     const sql1 = "UPDATE profesores SET nombre =? , apellido = ?, email = ?, telefono = ?, role = ?, url= ? WHERE id_profesor = ?";
 
 
     const sql2 = "UPDATE cursos SET nombre = ? WHERE id_profesor = ?";
-
-    // db.query(sql, [nombre, apellido, email, telefono, role, id_profesor], (err, result) => {
-    //     if (err) {
-    //         return res.status(500).send({
-    //             message: "error en la base de datos",
-    //             payload: []
-    //         });
-    //     }
-
-    //     return res.send({
-    //         message: "actualizacion de profesor exitoso ",
-    //         payload: result.info
-    //     });
-
-    // });
-
 
     try {
 

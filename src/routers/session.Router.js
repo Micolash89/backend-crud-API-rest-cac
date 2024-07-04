@@ -48,7 +48,7 @@ sessionRouter.post("/login", async (req, res) => {
 
     } catch (error) {
         res.status(500).send({
-            message: "Error en la base de datos",
+            message: "usuario no registrado",
             payload: []
         })
     }

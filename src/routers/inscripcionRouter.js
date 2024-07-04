@@ -37,7 +37,19 @@ inscripcionRouter.get("/obtener", (req, res) => {
 
     /*hacer un join con la base de datos de profesores y alumnos*/
     const sql = `
-        SELECT i.id_inscripcion, i.fecha_inscripcion, a.nombre AS nombre_alumno, a.apellido AS apellido_alumno, a.estado AS estado_alumno, a.id_alumno, p.nombre AS nombre_profesor, p.apellido AS apellido_profesor, p.id_profesor, c.id_curso ,c.nombre AS nombre_curso
+        SELECT i.id_inscripcion,
+        i.fecha_inscripcion,
+        a.nombre AS nombre_alumno,
+        a.apellido AS apellido_alumno,
+        a.estado AS estado_alumno,
+        a.id_alumno,
+        a.url AS url_alumno,
+        p.nombre AS nombre_profesor,
+        p.apellido AS apellido_profesor,
+        p.id_profesor,
+        p.url AS url_profesor,
+        c.id_curso ,
+        c.nombre AS nombre_curso
         FROM inscripciones i
         JOIN alumnos a ON i.id_alumno = a.id_alumno AND a.estado = 1
         JOIN cursos c ON i.id_curso = c.id_curso
@@ -70,7 +82,8 @@ inscripcionRouter.get("/obtener/:cid", (req, res) => {
         SELECT i.id_inscripcion, i.fecha_inscripcion, 
         a.id_alumno, a.nombre AS nombre_alumno, 
         a.apellido AS apellido_alumno,
-        c.nombre AS nombre_curso
+        a.url,
+        c.nombre AS nombre_curso, 
         FROM inscripciones i
         INNER JOIN alumnos a ON a.id_alumno = i.id_alumno AND a.estado=1
         INNER JOIN cursos c ON c.id_curso = i.id_curso 

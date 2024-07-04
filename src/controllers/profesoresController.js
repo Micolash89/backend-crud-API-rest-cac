@@ -5,13 +5,29 @@ export const obtenerListaProfesores = (req, res) => {
 
     /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
 
-    const sql = "SELECT * FROM profesores WHERE estado = 1";
+    const sql = `SELECT p.id_profesor,
+                        p.nombre,
+                        p.apellido,
+                        p.url,
+                        p.email,
+                        p.telefono,
+                        p.role,
+                        c.nombre AS nombre_curso,
+                        p.estado,
+                        p.url
+                        FROM profesores p
+                        INNER JOIN cursos c ON
+                        c.id_profesor = p.id_profesor
+                        ORDER BY estado 
+                        DESC`;
 
     db.query(sql, (err, result) => {
-        if (err) return res.status(500).send({
-            message: "error en la base de datos",
-            payload: []
-        });
+        if (err) {
+            return res.status(500).send({
+                message: "error en la base de datos",
+                payload: []
+            });
+        }
 
         res.send({
             message: "lista de profesores",
@@ -50,6 +66,8 @@ export const subirProfesor = async (req, res) => {
 
     const { nombre, apellido, email, telefono, password, role, curso } = req.body;
 
+    let url = "";
+
     if (!nombre || !apellido || !email || !telefono || !password || !role || !curso) {
 
         return res.status(400).send({
@@ -58,15 +76,18 @@ export const subirProfesor = async (req, res) => {
         })
     }
 
-    console.log(nombre, apellido, email, telefono, password, role, curso);
+    if (role == "ADMIN")
+        url = "https://i.imgur.com/pGsndwH.png";
+    else
+        url = "https://i.imgur.com/u2ji9Bz.png";
 
-    const sql1 = "INSERT INTO profesores (nombre, apellido , email, telefono, estado, password, role) VALUES (?,?,?,?,?,?,?)";
+    const sql1 = "INSERT INTO profesores (nombre, apellido , email, telefono, estado, password, role, url) VALUES (?,?,?,?,?,?,?,?)";
 
     const sql2 = `INSERT INTO cursos (nombre, id_profesor) VALUES (?,?)`;
 
     try {
 
-        const [profesoresResult] = await db.promise().query(sql1, [nombre, apellido, email, telefono, true, createHash(password), role]);
+        const [profesoresResult] = await db.promise().query(sql1, [nombre, apellido, email, telefono, true, createHash(password), role, url]);
 
         const [cursosResult] = await db.promise().query(sql2, [curso, profesoresResult.insertId]);
 
@@ -84,34 +105,63 @@ export const subirProfesor = async (req, res) => {
 
 };
 
-export const actualizarProfesor = (req, res) => {
+export const actualizarProfesor = async (req, res) => {
 
-    const { id_profesor, nombre, apellido, email, telefono, role } = req.body;
+    const { id_profesor, nombre, apellido, email, telefono, role, curso } = req.body;
 
-    if (!id_profesor || !nombre || !apellido || !email || !telefono, !role) {
+    let url = "";
 
+    if (!id_profesor || !nombre || !apellido || !email || !telefono || !role || !curso) {
         return res.status(400).send({
             message: "error en algun campo",
             payload: []
         })
     }
 
-    const sql = "UPDATE profesores SET nombre =? , apellido = ?, email = ?, telefono = ?, role = ? WHERE id_profesor = ?";
+    if (role == "ADMIN")
+        url = "https://i.imgur.com/pGsndwH.png";
+    else
+        url = "https://i.imgur.com/u2ji9Bz.png";
 
-    db.query(sql, [nombre, apellido, email, telefono, role, id_profesor], (err, result) => {
-        if (err) {
-            return res.status(500).send({
-                message: "error en la base de datos",
-                payload: []
-            });
-        }
+    const sql1 = "UPDATE profesores SET nombre =? , apellido = ?, email = ?, telefono = ?, role = ?, url= ? WHERE id_profesor = ?";
 
-        return res.send({
+
+    const sql2 = "UPDATE cursos SET nombre = ? WHERE id_profesor = ?";
+
+    // db.query(sql, [nombre, apellido, email, telefono, role, id_profesor], (err, result) => {
+    //     if (err) {
+    //         return res.status(500).send({
+    //             message: "error en la base de datos",
+    //             payload: []
+    //         });
+    //     }
+
+    //     return res.send({
+    //         message: "actualizacion de profesor exitoso ",
+    //         payload: result.info
+    //     });
+
+    // });
+
+
+    try {
+
+        const [profesoresResult] = await db.promise().query(sql1, [nombre, apellido, email, telefono, role, url, id_profesor]);
+
+        const [cursosResult] = await db.promise().query(sql2, [curso, id_profesor]);
+
+        res.send({
             message: "actualizacion de profesor exitoso ",
-            payload: result.info
-        });
+            payload: []
+        })
 
-    });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
+        })
+    }
 
 };
 

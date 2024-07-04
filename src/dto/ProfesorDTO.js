@@ -8,9 +8,10 @@ export default class ProfesorDTO {
             nombre: profesor.nombre,
             apellido: profesor.apellido,
             email: profesor.email,
-            //rol: profesor.rol,
+            role: profesor.role,
             estado: profesor.estado,
-            telefono: profesor.telefono
+            telefono: profesor.telefono,
+            url: profesor.url
         }
 
     }

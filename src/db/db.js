@@ -37,6 +37,7 @@ connection.connect(err => {
                 id_profesor INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(100) NOT NULL,
                 apellido VARCHAR(100) NOT NULL,
+                url VARCHAR(300),
                 email VARCHAR(100) NOT NULL UNIQUE,
                 telefono VARCHAR(20),
                 estado TINYINT(1) NOT NULL,
@@ -54,8 +55,9 @@ connection.connect(err => {
                 connection.query(`
                     CREATE TABLE IF NOT EXISTS alumnos (
                         id_alumno INT AUTO_INCREMENT PRIMARY KEY,
-                        nombre VARCHAR(100) NOT NULL,
+                        nombre VARCHAR(300) NOT NULL,
                         apellido VARCHAR(100) NOT NULL,
+                        url VARCHAR(100),
                         email VARCHAR(100) NOT NULL UNIQUE,
                         fecha_nacimiento DATE NOT NULL,
                         estado TINYINT(1) NOT NULL

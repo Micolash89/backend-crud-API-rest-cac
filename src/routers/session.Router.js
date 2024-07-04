@@ -9,9 +9,18 @@ const sessionRouter = Router();
 sessionRouter.post("/login", async (req, res) => {
 
     const { email, password } = req.body;
-    console.log(email, password);
     const sql = `
-        SELECT id_profesor, email, password, nombre, apellido, estado, email, telefono FROM profesores p WHERE p.email LIKE ? 
+        SELECT id_profesor,
+         email, 
+         password,
+          nombre, 
+          apellido, 
+          estado, 
+          email, 
+          telefono,
+          url,
+          role
+          FROM profesores p WHERE p.email LIKE ? 
     `;
 
     try {

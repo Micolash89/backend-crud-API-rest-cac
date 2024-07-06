@@ -15,20 +15,22 @@ export const authMiddleware = (req, res, next) => {
 
     const authHeader = req.headers['authorization'];
 
-    if (!authHeader) return res.status(403).send({ auth: false, message: "no se proveyó un token" });
+    if (!authHeader) return res.status(403).send({ auth: false, message: "inicie session" });
 
     const token = authHeader.split(" ")[1];
 
-    if (!token) return res.status(403).send({ auth: false, message: "Malformed token" });
+    if (!token) return res.status(403).send({ auth: false, message: "no existe el token" });
 
     //poner en variable de entorno  secreto
     jwt.verify(token, "secreto", (err, decode) => {
         if (err) return res.status(500).send({ auth: false, message: "token inválido" });
 
         req.profesor = decode.profesor;
-        next();
 
-    })
+        if (decode.profesor.role != "ADMIN") return res.status(403).send({ auth: false, message: "no tiene permisos" })
+
+        next();
+    });
 
 }
 

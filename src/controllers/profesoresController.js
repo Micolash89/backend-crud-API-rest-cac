@@ -1,7 +1,7 @@
 import { createHash } from "../../utils.js";
 import db from "../db/db.js"
 
-export const obtenerListaProfesores = (req, res) => {
+export const obtenerListaProfesores = async (req, res) => {
 
     /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
 
@@ -21,30 +21,29 @@ export const obtenerListaProfesores = (req, res) => {
                         ORDER BY estado 
                         DESC`;
 
-    db.query(sql, (err, result) => {
-        if (err) {
-            return res.status(500).send({
-                message: "error en la base de datos",
-                payload: []
-            });
-        }
+    try {
+
+        const [profesoresResult] = await db.promise().query(sql);
 
         res.send({
             message: "lista de profesores",
-            payload: result
-        });
+            payload: profesoresResult,
+        })
 
-    });
+
+    } catch (error) {
+        res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
+        });
+    }
 
 };
 
 export const obtenerProfesor = (req, res) => {
 
-    /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
-
     const { id } = req.params;
 
-    /*hacer un join con sursos en profesores con curso*/
     const sql = "SELECT * FROM profesores WHERE id_profesor = ? AND estado = 1";
 
     db.query(sql, [id], (err, result) => {

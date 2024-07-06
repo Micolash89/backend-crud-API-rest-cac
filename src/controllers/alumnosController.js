@@ -24,6 +24,7 @@ export const obtenerListaAlumnos = async (req, res) => {
         })
 
     } catch (error) {
+        console.log(error);
         res.status(500).send({
             message: "Error al obtener la lista de alumnos",
             payload: []

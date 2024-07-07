@@ -178,3 +178,24 @@ export const eliminarProfesor = (req, res) => {
 
 };
 
+export const contarProfesores = async (req, res) => {
+
+    const sql = "SELECT COUNT(*) as total FROM profesores WHERE estado = 1";
+
+    try {
+        const [cursosprofesores] = await db.promise().query(sql);
+
+        res.send({
+            message: "se obtuvo la cantidad de profesores",
+            payload: cursosprofesores[0]
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
+        })
+    }
+
+}

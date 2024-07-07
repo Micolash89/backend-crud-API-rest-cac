@@ -102,3 +102,28 @@ export const actualizarCurso = (req, res) => {
     })
 
 }
+
+export const contarCursos = async (req, res) => {
+
+    const sql = `SELECT COUNT(*) AS total
+                FROM cursos c
+                INNER JOIN  profesores p ON c.id_profesor = p.id_profesor AND p.estado = 1`
+
+    try {
+
+        const [cursosResult] = await db.promise().query(sql)
+
+        res.send({
+            message: "cursos encontrados",
+            payload: cursosResult[0]
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
+        })
+    }
+
+}

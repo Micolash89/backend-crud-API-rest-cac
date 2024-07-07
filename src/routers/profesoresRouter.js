@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { actualizarProfesor, eliminarProfesor, obtenerListaProfesores, obtenerProfesor, subirProfesor } from "../controllers/profesoresController.js";
+import { actualizarProfesor, contarProfesores, eliminarProfesor, obtenerListaProfesores, obtenerProfesor, subirProfesor } from "../controllers/profesoresController.js";
 import { authMiddleware } from "../../utils.js";
 
 const profesoresRouter = Router();
@@ -7,6 +7,8 @@ const profesoresRouter = Router();
 profesoresRouter.get("/obtener", obtenerListaProfesores);
 
 profesoresRouter.get("/obtener/:id", obtenerProfesor);
+
+profesoresRouter.get("/contar", contarProfesores)
 
 profesoresRouter.post("/subir", authMiddleware, subirProfesor);
 

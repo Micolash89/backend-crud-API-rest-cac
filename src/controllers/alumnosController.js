@@ -157,3 +157,23 @@ export const eliminarAlumno = (req, res) => {
     });
 
 }
+
+export const contarAlumnos = async (req, res) => {
+    const sql = `SELECT COUNT(*) as total FROM alumnos WHERE estado=1;`;
+
+    try {
+
+        const [alumnosResult] = await db.promise().query(sql);
+
+        res.send({
+            message: "Se obtuvieron los alumnos",
+            payload: alumnosResult[0]
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            message: "error en la base de datos",
+            payload: []
+        })
+    }
+}

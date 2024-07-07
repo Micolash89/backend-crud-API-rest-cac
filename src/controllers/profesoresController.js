@@ -22,8 +22,9 @@ export const obtenerListaProfesores = async (req, res) => {
                         DESC`;
 
     try {
-
-        const [profesoresResult] = await db.promise().query(sql);
+        const connection = await db.promise().getConnection();
+        const [profesoresResult] = await connection.query(sql);
+        connection.release();
 
         res.send({
             message: "lista de profesores",
@@ -32,6 +33,7 @@ export const obtenerListaProfesores = async (req, res) => {
 
 
     } catch (error) {
+        console.log(error);
         res.status(500).send({
             message: "error en la base de datos",
             payload: []
@@ -45,6 +47,7 @@ export const obtenerProfesor = (req, res) => {
     const { id } = req.params;
 
     const sql = "SELECT * FROM profesores WHERE id_profesor = ? AND estado = 1";
+
 
     db.query(sql, [id], (err, result) => {
         if (err) return res.status(500).send({
@@ -85,11 +88,11 @@ export const subirProfesor = async (req, res) => {
     const sql2 = `INSERT INTO cursos (nombre, id_profesor) VALUES (?,?)`;
 
     try {
+        const connection = await db.promise().getConnection();
+        const [profesoresResult] = await connection.query(sql1, [nombre, apellido, email, telefono, true, createHash(password), role, url]);
 
-        const [profesoresResult] = await db.promise().query(sql1, [nombre, apellido, email, telefono, true, createHash(password), role, url]);
-
-        const [cursosResult] = await db.promise().query(sql2, [curso, profesoresResult.insertId]);
-
+        const [cursosResult] = await connection.query(sql2, [curso, profesoresResult.insertId]);
+        connection.release();
         res.send({
             message: "carga exitoso de profesor",
             payload: profesoresResult.insertId
@@ -128,11 +131,11 @@ export const actualizarProfesor = async (req, res) => {
     const sql2 = "UPDATE cursos SET nombre = ? WHERE id_profesor = ?";
 
     try {
+        const connection = await db.promise().getConnection();
+        const [profesoresResult] = await connection.query(sql1, [nombre, apellido, email, telefono, role, url, id_profesor]);
 
-        const [profesoresResult] = await db.promise().query(sql1, [nombre, apellido, email, telefono, role, url, id_profesor]);
-
-        const [cursosResult] = await db.promise().query(sql2, [curso, id_profesor]);
-
+        const [cursosResult] = await connection.query(sql2, [curso, id_profesor]);
+        connection.release();
         res.send({
             message: "actualizacion de profesor exitoso ",
             payload: []
@@ -145,6 +148,7 @@ export const actualizarProfesor = async (req, res) => {
             payload: []
         })
     }
+
 
 };
 
@@ -162,7 +166,6 @@ export const eliminarProfesor = (req, res) => {
 
     //baja logica
     const sql = "UPDATE profesores SET estado = ? WHERE id_profesor = ?";
-
     db.query(sql, [false, pid], (err, result) => {
         if (err) return res.status(500).send({
             message: "error en la base de datos",
@@ -183,8 +186,9 @@ export const contarProfesores = async (req, res) => {
     const sql = "SELECT COUNT(*) as total FROM profesores WHERE estado = 1";
 
     try {
-        const [cursosprofesores] = await db.promise().query(sql);
-
+        const connection = await db.promise().getConnection();
+        const [cursosprofesores] = await connection.query(sql);
+        connection.release();
         res.send({
             message: "se obtuvo la cantidad de profesores",
             payload: cursosprofesores[0]

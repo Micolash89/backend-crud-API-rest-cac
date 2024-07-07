@@ -15,9 +15,9 @@ export const obtenerListaAlumnos = async (req, res) => {
     `
 
     try {
-
-        const [alumnosResult] = await db.promise().query(sql);
-
+        const connection = await db.promise().getConnection();
+        const [alumnosResult] = await connection.query(sql);
+        connection.release();
         res.send({
             message: "lista de alumnos",
             payload: alumnosResult
@@ -51,14 +51,14 @@ export const subirAlumno = async (req, res) => {
     const sql2 = "INSERT INTO inscripciones (id_alumno, id_curso, fecha_inscripcion) VALUE (?,?,?)"
 
     try {
-
-        const [alumnoResult] = await db.promise().query(sql1, [nombre, apellido, email, fecha_nacimiento, true, url]);
+        const connection = await db.promise().getConnection();
+        const [alumnoResult] = await connection.query(sql1, [nombre, apellido, email, fecha_nacimiento, true, url]);
 
         const today = new Date();
         const formattedDate = today.toISOString().split('T')[0];
 
-        const [cursoResul] = await db.promise().query(sql2, [alumnoResult.insertId, id_curso, formattedDate]);
-
+        const [cursoResul] = await connection.query(sql2, [alumnoResult.insertId, id_curso, formattedDate]);
+        connection.release();
         res.send({
             message: "carga exitosa de alumno",
             payload: alumnoResult.insertId
@@ -103,14 +103,14 @@ export const actualizarAlumno = async (req, res) => {
         WHERE id_alumno = ?;
     `
     try {
-
-        const [alumnoResult] = await db.promise().query(sql1, [nombre, apellido, email, fecha_nacimiento, id_alumno]);
+        const connection = await db.promise().getConnection();
+        const [alumnoResult] = await connection.query(sql1, [nombre, apellido, email, fecha_nacimiento, id_alumno]);
 
         const today = new Date();
         const formattedDate = today.toISOString().split('T')[0];
 
-        const [inscripcionResul] = await db.promise().query(sql2, [id_curso, formattedDate, id_alumno]);
-
+        const [inscripcionResul] = await connection.query(sql2, [id_curso, formattedDate, id_alumno]);
+        connection.release();
         res.send({
             message: "alumno actualizado",
             payload: []
@@ -162,9 +162,9 @@ export const contarAlumnos = async (req, res) => {
     const sql = `SELECT COUNT(*) as total FROM alumnos WHERE estado=1;`;
 
     try {
-
-        const [alumnosResult] = await db.promise().query(sql);
-
+        const connection = await db.promise().getConnection();
+        const [alumnosResult] = await connection.query(sql);
+        connection.release();
         res.send({
             message: "Se obtuvieron los alumnos",
             payload: alumnosResult[0]

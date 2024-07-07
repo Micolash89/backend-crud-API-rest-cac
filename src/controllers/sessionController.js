@@ -5,6 +5,7 @@ import { isValidPassword } from "../../utils.js";
 
 export const loginPost = async (req, res) => {
 
+
     const { email, password } = req.body;
     const sql = `
         SELECT id_profesor,
@@ -21,9 +22,9 @@ export const loginPost = async (req, res) => {
     `;
 
     try {
-
-        const [profesorResult] = await db.promise().query(sql, [email]);
-
+        const connection = await db.promise().getConnection();
+        const [profesorResult] = await connection.query(sql, [email]);
+        connection.release();
         if (!profesorResult) {
             res.status(404).send({
                 message: "error en alguno de los campos",

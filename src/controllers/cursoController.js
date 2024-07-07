@@ -76,7 +76,7 @@ export const subirCurso = (req, res) => {
             payload: result.insertId
         });
 
-    })
+    });
 
 }
 
@@ -99,7 +99,7 @@ export const actualizarCurso = (req, res) => {
             payload: result
         });
 
-    })
+    });
 
 }
 
@@ -110,9 +110,9 @@ export const contarCursos = async (req, res) => {
                 INNER JOIN  profesores p ON c.id_profesor = p.id_profesor AND p.estado = 1`
 
     try {
-
-        const [cursosResult] = await db.promise().query(sql)
-
+        const connection = await db.promise().getConnection();
+        const [cursosResult] = await connection.query(sql)
+        connection.release();
         res.send({
             message: "cursos encontrados",
             payload: cursosResult[0]

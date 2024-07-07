@@ -27,9 +27,10 @@ export const buscarPorFiltro = async (req, res) => {
     `;
 
     try {
-        const [profesoresResult] = await db.promise().query(sql1, [searchValue, searchValue]);
-        const [alumnosResult] = await db.promise().query(sql2, [searchValue, searchValue]);
-
+        const connection = await db.promise().getConnection();
+        const [profesoresResult] = await connection.query(sql1, [searchValue, searchValue]);
+        const [alumnosResult] = await connection.query(sql2, [searchValue, searchValue]);
+        connection.release();
         if (!profesoresResult.length) {
             resultadoConsultado.profesores = {
                 message: "no se encontraron profesores",

@@ -58,7 +58,9 @@ export const obtenerUnaInscripcion = async (req, res) => {
         WHERE i.id_curso = ? 
     `
     try {
-        const [incripcionesResult] = await db.promise().query(sql, [cid])
+        const connection = await db.promise().getConnection();
+        const [incripcionesResult] = await connection.query(sql, [cid])
+        connection.release();
 
         if (!incripcionesResult.length)
             return res.status(200).send({

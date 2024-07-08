@@ -39,18 +39,19 @@ export const obtenerCursos = (req, res) => {
                 p.apellido,
                 p.email,
                 p.telefono,
-                p.estado, 
-                cant(i.*)
+                p.estado
     FROM cursos c
     INNER JOIN profesores p ON c.id_profesor = p.id_profesor AND p.estado = 1
-    INNER JOIN incripciones i on c.id_cursos = i.id_cursos
     `
     db.query(sql, (err, result) => {
 
-        if (err) return res.status(500).send({
-            message: "error en la base de datos",
-            payload: []
-        });
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: "error en la base de datos",
+                payload: []
+            });
+        }
 
         return res.status(200).send({
             message: "cursos obtenidos",

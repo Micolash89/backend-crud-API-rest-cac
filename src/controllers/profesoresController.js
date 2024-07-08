@@ -89,7 +89,6 @@ export const subirProfesor = async (req, res) => {
     let url = "";
 
     if (!nombre || !apellido || !email || !telefono || !password || !role || !curso) {
-
         return res.status(400).send({
             message: "error en algun campo",
             payload: []

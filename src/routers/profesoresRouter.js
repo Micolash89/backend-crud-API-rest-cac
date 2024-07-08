@@ -10,7 +10,7 @@ profesoresRouter.get("/obtener/:id", obtenerProfesor);
 
 profesoresRouter.get("/contar", contarProfesores)
 
-profesoresRouter.post("/subir", authMiddleware, subirProfesor);
+profesoresRouter.post("/subir", subirProfesor);
 
 profesoresRouter.put("/actualizar", authMiddleware, actualizarProfesor);
 

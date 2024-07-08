@@ -50,6 +50,9 @@ export const obtenerUnaInscripcion = async (req, res) => {
                 a.id_alumno, 
                 a.nombre AS nombre_alumno, 
                 a.apellido AS apellido_alumno,
+                a.email,
+                a.fecha_nacimiento,
+                a.estado,
                 a.url,
                 c.nombre AS nombre_curso
         FROM inscripciones i
@@ -133,5 +136,34 @@ export const actualizarIncripcion = (req, res) => {
         });
 
     });
+
+}
+
+export const obtenerCantAlumnosIncripciones = async (req, res) => {
+
+    const { cid } = req.params;
+
+    const sql = `
+                SELECT count(*) AS total
+                FROM inscripciones WHERE id_curso = ?
+    `;
+
+    try {
+
+        const connection = await db.promise().getConnection();
+        const [result] = await connection.query(sql, [cid]);
+        connection.release();
+
+        return res.status(200).send({
+            message: "Cantidad de alumnos inscritos en el curso",
+            payload: result[0]
+        });
+
+    } catch (error) {
+        res.status(500).send({
+            message: "Error al obtener la cantidad de inscripciones",
+            payload: []
+        });
+    }
 
 }

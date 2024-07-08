@@ -33,6 +33,42 @@ export const obtenerListaAlumnos = async (req, res) => {
 
 }
 
+export const obtenerAlumno = async (req, res) => {
+    /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
+
+    const { id } = req.params;
+
+    const sql = `
+                SELECT a.*,
+                c.nombre AS nombre_curso,
+                c.id_curso
+                FROM alumnos a
+                INNER JOIN inscripciones i ON a.id_alumno = i.id_alumno
+                INNER JOIN cursos c ON i.id_curso = c.id_curso
+                WHERE a.id_alumno = ?
+                ORDER BY estado 
+                DESC;
+    `
+
+    try {
+        const connection = await db.promise().getConnection();
+        const [alumnosResult] = await connection.query(sql, [id]);
+        connection.release();
+        res.send({
+            message: "alumno obtenido",
+            payload: alumnosResult[0]
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            message: "Error al obtener al alumno con id " + id,
+            payload: []
+        })
+    }
+
+}
+
 export const subirAlumno = async (req, res) => {
 
     const { nombre, apellido, email, fecha_nacimiento, id_curso } = req.body;

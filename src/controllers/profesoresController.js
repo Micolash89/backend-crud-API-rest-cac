@@ -46,18 +46,36 @@ export const obtenerProfesor = (req, res) => {
 
     const { id } = req.params;
 
-    const sql = "SELECT * FROM profesores WHERE id_profesor = ? AND estado = 1";
+    const sql = `SELECT p.id_profesor,
+                        p.nombre,
+                        p.apellido,
+                        p.url,
+                        p.email,
+                        p.telefono,
+                        p.role,
+                        c.nombre AS nombre_curso,
+                        p.estado,
+                        p.url
+                        FROM profesores p
+                        INNER JOIN cursos c ON
+                        c.id_profesor = p.id_profesor
+                        WHERE 
+                        p.id_profesor = ?`;
 
 
     db.query(sql, [id], (err, result) => {
-        if (err) return res.status(500).send({
-            message: `no se encontro el profesor con id ${id}`,
-            payload: []
-        });
+
+        if (err) {
+            console.log(err);
+            return res.status(500).send({
+                message: `no se encontro el profesor con id ${id}`,
+                payload: []
+            })
+        };
 
         res.send({
             message: "Profesor encontrado profesores",
-            payload: result
+            payload: result[0]
         });
 
     });

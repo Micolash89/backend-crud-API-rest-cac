@@ -75,21 +75,6 @@ Este proyecto es el backend de una aplicación educativa que permite gestionar p
 
 ## Dependencias
 
-- bcrypt: ^5.1.1
-- cors: ^2.8.5
-- dotenv: ^16.4.5
-- express: ^4.19.2
-- jsonwebtoken: ^9.0.2
-- mysql2: ^3.10.1
-- nodemailer: ^6.9.14
-- nodemon: ^3.1.4
-- passport: ^0.7.0
-- passport-github2: ^0.1.12
-- passport-jwt: ^4.0.1
-- passport-local: ^1.0.0
-
-## Dependencias
-
 A continuación se detallan las dependencias utilizadas en este proyecto:
 
 | Nombre          | Versión |

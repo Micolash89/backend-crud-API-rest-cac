@@ -10,7 +10,7 @@ Este proyecto es el backend de una aplicación educativa que permite gestionar p
    ```bash
    git clone https://github.com/tu-usuario/nombre-del-repo.git
    ```
-````
+
 
 2. Instalar las dependencias:
    ```bash

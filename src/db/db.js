@@ -124,7 +124,6 @@ const initializeDatabase = () => {
 // Inicializar la base de datos
 initializeDatabase();
 
-// Crear el pool de conexiones para uso regular
 const db = createPool({
     ...dbConfig,
     waitForConnections: true,

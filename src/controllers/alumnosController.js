@@ -1,4 +1,3 @@
-
 import db from "../db/db.js"
 import { sendEmail } from "../service/emailService.js";
 

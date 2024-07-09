@@ -1,6 +1,3 @@
-Claro, aquí tienes todo en formato Markdown para que puedas copiar y pegar:
-
-````markdown
 # Proyecto Backend - Fullstack Node.js (Codo a Codo)
 
 ## Descripción
@@ -13,7 +10,7 @@ Este proyecto es el backend de una aplicación educativa que permite gestionar p
    ```bash
    git clone https://github.com/tu-usuario/nombre-del-repo.git
    ```
-````
+
 
 2. Instalar las dependencias:
    ```bash
@@ -30,19 +27,6 @@ Este proyecto es el backend de una aplicación educativa que permite gestionar p
    JWT_SECRET=tu_secreto_jwt
    ```
 
-## Uso
-
-Para iniciar el servidor en modo desarrollo:
-
-```bash
-npm run dev
-```
-
-Para iniciar el servidor en modo producción:
-
-```bash
-npm start
-```
 
 ## Rutas
 
@@ -91,28 +75,22 @@ npm start
 
 ## Dependencias
 
-- bcrypt: ^5.1.1
-- cors: ^2.8.5
-- dotenv: ^16.4.5
-- express: ^4.19.2
-- jsonwebtoken: ^9.0.2
-- mysql2: ^3.10.1
-- nodemailer: ^6.9.14
-- nodemon: ^3.1.4
-- passport: ^0.7.0
-- passport-github2: ^0.1.12
-- passport-jwt: ^4.0.1
-- passport-local: ^1.0.0
-
-## Dependencias
-
 A continuación se detallan las dependencias utilizadas en este proyecto:
 
 | Nombre          | Versión |
 | --------------- | ------- |
-| @faker-js/faker | ^8.4.1  |
-
-Puedes copiar y pegar este contenido en tu archivo `README.md`.
+| bcrypt | ^5.1.1  |
+| cors | ^2.8.5  |
+| dotenv | ^16.4.5  |
+| express | ^4.19.2  |
+| jsonwebtoken | ^9.0.2  |
+| mysql2 | ^3.10.1  |
+| nodemailer | ^6.9.14  |
+| nodemon | ^3.1.4  |
+| passport | ^0.7.0  |
+| passport-github2 | ^0.1.12  |
+| passport-jwt | ^4.0.1  |
+| passport-local | ^1.0.0  |
 
 ## Capturas de Pantalla
 

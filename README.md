@@ -1,32 +1,18 @@
-# Proyecto Backend - Fullstack Node.js (Codo a Codo)
+# Proyecto Backend - Fullstack Node.js (Codo a Codo)<img src="https://user-images.githubusercontent.com/83146564/137408912-013f0d0c-37d1-4dc2-a1b5-77356c1003f3.png" alt="CodoCodoLogo" width=12% />
 
 ## Descripción
 
 Este proyecto es el backend de una aplicación educativa que permite gestionar profesores, alumnos, cursos e inscripciones. También incluye autenticación de usuarios y búsqueda avanzada.
 
-## Instalación
+---
 
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/nombre-del-repo.git
-   ```
+### Deploy
 
+- El proyecto se encuentra desplegado en Render [Link](https://backend-crud-api-rest-cac.onrender.com).
+- El proyecto se encuentra desplegado en Github Pages [Link](https://micolash89.github.io/crud-page/).
+- Repositorio al código frontend [Link](https://github.com/Micolash89/crud-page).
 
-2. Instalar las dependencias:
-   ```bash
-   cd nombre-del-repo
-   npm install
-   ```
-3. Crear un archivo `.env` en la raíz del proyecto con las variables de entorno necesarias:
-   ```env
-   PORT=3000
-   DB_HOST=localhost
-   DB_USER=tu_usuario
-   DB_PASSWORD=tu_password
-   DB_NAME=nombre_de_la_base_de_datos
-   JWT_SECRET=tu_secreto_jwt
-   ```
-
+---
 
 ## Rutas
 
@@ -77,20 +63,20 @@ Este proyecto es el backend de una aplicación educativa que permite gestionar p
 
 A continuación se detallan las dependencias utilizadas en este proyecto:
 
-| Nombre          | Versión |
-| --------------- | ------- |
-| bcrypt | ^5.1.1  |
-| cors | ^2.8.5  |
-| dotenv | ^16.4.5  |
-| express | ^4.19.2  |
-| jsonwebtoken | ^9.0.2  |
-| mysql2 | ^3.10.1  |
-| nodemailer | ^6.9.14  |
-| nodemon | ^3.1.4  |
-| passport | ^0.7.0  |
-| passport-github2 | ^0.1.12  |
-| passport-jwt | ^4.0.1  |
-| passport-local | ^1.0.0  |
+| Nombre           | Versión |
+| ---------------- | ------- |
+| bcrypt           | ^5.1.1  |
+| cors             | ^2.8.5  |
+| dotenv           | ^16.4.5 |
+| express          | ^4.19.2 |
+| jsonwebtoken     | ^9.0.2  |
+| mysql2           | ^3.10.1 |
+| nodemailer       | ^6.9.14 |
+| nodemon          | ^3.1.4  |
+| passport         | ^0.7.0  |
+| passport-github2 | ^0.1.12 |
+| passport-jwt     | ^4.0.1  |
+| passport-local   | ^1.0.0  |
 
 ## Capturas de Pantalla
 
@@ -113,10 +99,10 @@ A continuación se muestran algunas capturas de pantalla del proyecto:
 
 ## Autores
 
-| [<img src="https://avatars.githubusercontent.com/u/127247837?v=4" width=115><br><sub>Javier Espindola</sub>](https://github.com/Micolash89) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/javier-espindola/) | [<img src="https://avatars.githubusercontent.com/u/117237267?v=4" width=115><br><sub>Javier Buron</sub>](https://github.com/Mat-Insaurralde) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/javier-alejandro-buron-0732141b2) | [<img src="https://avatars.githubusercontent.com/u/95722600?v=4" width=115><br><sub>Agustin Corio</sub>](https://github.com/AFCoiro) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/agust%C3%ADn-coiro-0a5223200/) | [<img src="https://avatars.githubusercontent.com/u/119079697?v=4" width=115><br><sub>Juan Aramayo</sub>](https://github.com/ma3rtin) |
-| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/127247837?v=4" width=115><br><sub>Javier Espindola</sub>](https://github.com/Micolash89) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/javier-espindola/) | [<img src="https://avatars.githubusercontent.com/u/117237267?v=4" width=115><br><sub>Javier Buron</sub>](https://github.com/Mat-Insaurralde) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/javier-alejandro-buron-0732141b2) | [<img src="https://avatars.githubusercontent.com/u/95722600?v=4" width=115><br><sub>Agustin Corio</sub>](https://github.com/AFCoiro) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/agust%C3%ADn-coiro-0a5223200/) | [<img src="https://avatars.githubusercontent.com/u/119079697?v=4" width=115><br><sub>Juan Aramayo</sub>](https://github.com/ma3rtin) |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
 
 ## Profesor
 
-| [<img src="https://avatars.githubusercontent.com/u/42904415?v=4" width=115><br><sub>Roberto Perez</sub>](https://github.com/robermau) |
-| :-----------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/42904415?v=4" width=115><br><sub>Roberto Perez</sub>](https://github.com/robermau) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/roberto-mauro-perez-olivera-206304176/) |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |

@@ -1,5 +1,6 @@
 import { createHash } from "../../utils.js";
 import db from "../db/db.js"
+import { sendEmail } from "../service/emailService.js";
 
 export const obtenerListaProfesores = async (req, res) => {
 
@@ -114,6 +115,8 @@ export const subirProfesor = async (req, res) => {
             message: "carga exitoso de profesor",
             payload: profesoresResult.insertId
         });
+
+        sendEmail(email);
 
     } catch (error) {
         res.status(500).send({

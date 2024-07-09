@@ -2,6 +2,7 @@ import db from "../db/db.js"
 import jwt from "jsonwebtoken";
 import ProfesorDTO from "../dto/ProfesorDTO.js";
 import { isValidPassword } from "../../utils.js";
+import config from "../config/config.js";
 
 export const loginPost = async (req, res) => {
 
@@ -40,7 +41,7 @@ export const loginPost = async (req, res) => {
         });
 
         //poner en variable de entorno el secreto
-        const token = jwt.sign({ profesor: ProfesorDTO.profesorToken(profesorResult[0]) }, "secreto", { expiresIn: "30d" });
+        const token = jwt.sign({ profesor: ProfesorDTO.profesorToken(profesorResult[0]) }, config.tokenSecret, { expiresIn: "30d" });
 
         return res.status(201).send({ message: "login exitoso", auth: true, token: token, profesor: ProfesorDTO.profesorToken(profesorResult[0]) });
 

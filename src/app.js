@@ -6,18 +6,16 @@ import searchRouter from "./routers/searchRouter.js";
 import cursosRouter from "./routers/cursoRouter.js";
 import inscripcionRouter from "./routers/inscripcionRouter.js";
 import alumnosRouter from "./routers/alumnosRouter.js";
-import dotenv from "dotenv"
 import sessionRouter from "./routers/session.Router.js";
+import config from "./config/config.js";
 
-dotenv.config();
-
-const port = process.env.PORT || 8080;
+const port = config.port || 8080;
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({ origin: ["http://localhost:5173", "https://micolash89.github.io"], methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
+app.use(cors({ origin: config.allUrl.split(","), methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
 
 app.use("/api/profesores", profesoresRouter);
 app.use("/api/search", searchRouter)

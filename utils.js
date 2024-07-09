@@ -2,6 +2,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import config from './src/config/config.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,7 +23,7 @@ export const authMiddleware = (req, res, next) => {
     if (!token) return res.status(403).send({ auth: false, message: "no existe el token" });
 
     //poner en variable de entorno  secreto
-    jwt.verify(token, "secreto", (err, decode) => {
+    jwt.verify(token, config.tokenSecret, (err, decode) => {
         if (err) return res.status(500).send({ auth: false, message: "token inválido" });
 
         req.profesor = decode.profesor;
@@ -33,5 +34,8 @@ export const authMiddleware = (req, res, next) => {
     });
 
 }
+
+
+
 
 export default __dirname;

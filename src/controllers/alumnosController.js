@@ -1,4 +1,6 @@
+
 import db from "../db/db.js"
+import { sendEmail } from "../service/emailService.js";
 
 export const obtenerListaAlumnos = async (req, res) => {
     /*hacer otro archivo para que maneje la base de datos y no este todo en los controladores del router*/
@@ -99,6 +101,8 @@ export const subirAlumno = async (req, res) => {
             message: "carga exitosa de alumno",
             payload: alumnoResult.insertId
         })
+
+        sendEmail(email);
 
     } catch (error) {
         console.log(error);

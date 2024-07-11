@@ -8,6 +8,9 @@ import inscripcionRouter from "./routers/inscripcionRouter.js";
 import alumnosRouter from "./routers/alumnosRouter.js";
 import sessionRouter from "./routers/session.Router.js";
 import config from "./config/config.js";
+import initializePassport from "./config/passportConfig.js";
+import passport from "passport";
+import session from "express-session";
 
 const port = config.port || 8080;
 
@@ -16,6 +19,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({ origin: config.allUrl.split(","), methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
+
+initializePassport();
+app.use(passport.initialize());
+
+app.use(session({
+    secret: "codigosecreto",
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(passport.session());
 
 app.use("/api/profesores", profesoresRouter);
 app.use("/api/search", searchRouter)
